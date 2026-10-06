@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=Authenticator
+Comment=Two-factor sign-in codes for your accounts
+Exec=singularity-authenticator %u
+Icon=dev.sinty.authenticator
+Terminal=false
+Type=Application
+Categories=Utility;Security;
+Keywords=2fa;otp;totp;hotp;two-factor;mfa;code;token;steam;authenticator;
+StartupWMClass=dev.sinty.authenticator
+Actions=add-account;
+MimeType=x-scheme-handler/otpauth;
+
+[Desktop Action add-account]
+Name=Add Account
+Exec=singularity-authenticator --add-account

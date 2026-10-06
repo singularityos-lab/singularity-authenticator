@@ -1,0 +1,12 @@
+src/app.vala
+src/window.vala
+src/account.vala
+src/security.vala
+src/store.vala
+src/icons.vala
+src/qr-missing.vala
+src/migration.vala
+src/vault.vala
+src/qr-encoder.vala
+src/qr-render.vala
+src/search.vala

@@ -1,0 +1,8 @@
+[
+  {"secret":"JBSWY3DPEHPK3PXP","issuer":"GitLab","label":"dev@example.com","digits":6,"type":"TOTP","algorithm":"SHA1","thumbnail":"Default","last_used":1600000000000,"used_frequency":0,"period":30,"tags":[]},
+  {"secret":"GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ","label":"Legacy Corp - old@example.com","digits":8,"type":"TOTP","algorithm":"SHA256","period":45,"tags":["work"]},
+  {"secret":"JBSWY3DPEHPK3PXP","label":"Counter:hot","digits":6,"type":"HOTP","algorithm":"SHA1","counter":3},
+  {"secret":"JBSWY3DPEHPK3PXP","issuer":"Steam","label":"player","digits":5,"type":"STEAM","algorithm":"SHA1","period":30},
+  {"secret":"JBSWY3DPEHPK3PXP","label":"weird","type":"MOTP"},
+  "not an object"
+]

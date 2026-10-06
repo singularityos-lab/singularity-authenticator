@@ -1,0 +1,7 @@
+# exported accounts
+otpauth://totp/Example:alice@example.com?secret=JBSWY3DPEHPK3PXP&issuer=Example
+
+otpauth://hotp/Bank:carol?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&counter=5
+this line is not a link
+otpauth://totp/Bad?secret=0000
+otpauth://steam/Steam:gamer?secret=JBSWY3DPEHPK3PXP

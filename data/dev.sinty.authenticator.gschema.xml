@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="dev.sinty.authenticator" path="/dev/sinty/authenticator/">
+    <key name="lock-mode" type="s">
+      <choices>
+        <choice value="none"/>
+        <choice value="password"/>
+        <choice value="keyring"/>
+      </choices>
+      <default>'none'</default>
+      <summary>Lock mode</summary>
+      <description>How Authenticator locks: not at all, with its own password, or with the system keyring. The password itself is kept in the keyring.</description>
+    </key>
+    <key name="lock-minutes" type="i">
+      <default>5</default>
+      <range min="1" max="120"/>
+      <summary>Lock after</summary>
+      <description>Minutes in the background before Authenticator locks.</description>
+    </key>
+    <key name="download-icons" type="b">
+      <default>true</default>
+      <summary>Download provider icons</summary>
+      <description>Fetch each provider's icon from its website.</description>
+    </key>
+    <key name="clear-clipboard" type="b">
+      <default>true</default>
+      <summary>Clear copied codes</summary>
+      <description>Empty the clipboard 45 seconds after copying a code.</description>
+    </key>
+  </schema>
+</schemalist>

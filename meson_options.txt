@@ -1,0 +1,1 @@
+option('qr', type: 'feature', value: 'auto', description: 'Read setup QR codes from images through ZBar')

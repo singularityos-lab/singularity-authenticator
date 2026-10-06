@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "header": {"slots": null, "params": null},
+    "db": {
+        "version": 2,
+        "entries": [
+            {"type": "totp", "uuid": "01234567-89ab-cdef-0123-456789abcdef", "name": "alice@example.com", "issuer": "GitHub", "note": "", "favorite": false, "icon": null,
+             "info": {"secret": "JBSWY3DPEHPK3PXP", "algo": "SHA1", "digits": 6, "period": 30}},
+            {"type": "totp", "uuid": "11234567-89ab-cdef-0123-456789abcdef", "name": "bob", "issuer": "Cloud", "icon": null,
+             "info": {"secret": "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", "algo": "SHA256", "digits": 8, "period": 60}},
+            {"type": "hotp", "uuid": "21234567-89ab-cdef-0123-456789abcdef", "name": "carol", "issuer": "Bank",
+             "info": {"secret": "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", "algo": "SHA512", "digits": 7, "counter": 12}},
+            {"type": "steam", "uuid": "31234567-89ab-cdef-0123-456789abcdef", "name": "gamer", "issuer": "Steam",
+             "info": {"secret": "JBSWY3DPEHPK3PXP", "algo": "SHA1", "digits": 5, "period": 30}},
+            {"type": "yandex", "uuid": "41234567-89ab-cdef-0123-456789abcdef", "name": "unsupported", "issuer": "Yandex",
+             "info": {"secret": "JBSWY3DPEHPK3PXP", "algo": "SHA256", "digits": 8, "period": 30, "pin": "1234"}},
+            {"type": "totp", "uuid": "51234567-89ab-cdef-0123-456789abcdef", "name": "broken", "issuer": "Bad",
+             "info": {"secret": "!!!", "algo": "SHA1", "digits": 6, "period": 30}}
+        ]
+    }
+}

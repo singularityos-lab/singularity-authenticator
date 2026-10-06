@@ -1,0 +1,39 @@
+{
+    "schema-id": "dev.sinty.authenticator",
+    "settings": [
+        {
+            "key": "lock-mode",
+            "label": "Lock Authenticator",
+            "type": "string",
+            "widget": "combo",
+            "options": [
+                { "id": "none", "label": "Off", "subtitle": "Codes are shown as soon as the app opens" },
+                { "id": "password", "label": "With a Password", "subtitle": "Ask for a password of your choice" },
+                { "id": "keyring", "label": "With the System Keyring", "subtitle": "Lock the keyring and ask for its password" }
+            ]
+        },
+        {
+            "key": "lock-minutes",
+            "label": "Lock After (minutes)",
+            "subtitle": "Minutes in the background before locking",
+            "type": "int",
+            "widget": "spin",
+            "min": 1,
+            "max": 120
+        },
+        {
+            "key": "download-icons",
+            "label": "Download Provider Icons",
+            "subtitle": "Fetch each provider's icon from its website",
+            "type": "boolean",
+            "widget": "toggle"
+        },
+        {
+            "key": "clear-clipboard",
+            "label": "Clear Copied Codes",
+            "subtitle": "Empty the clipboard 45 seconds after copying a code",
+            "type": "boolean",
+            "widget": "toggle"
+        }
+    ]
+}
