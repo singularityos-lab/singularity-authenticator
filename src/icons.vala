@@ -112,7 +112,7 @@ namespace Singularity.Apps.Authenticator {
             var msg = new Soup.Message ("GET", url);
             if (msg == null) return null;
             try {
-                var bytes = yield session.send_and_read_async (msg, Priority.LOW, null);
+                var bytes = yield Singularity.HttpBody.read (session, msg, 512 * 1024, Priority.LOW, null);
                 if (msg.status_code != 200 || bytes.get_size () < 16 || bytes.get_size () > 512 * 1024) return null;
                 var loader = new Gdk.PixbufLoader ();
                 loader.write_bytes (bytes);
