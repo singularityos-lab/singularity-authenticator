@@ -1220,35 +1220,39 @@ namespace Singularity.Apps.Authenticator {
         }
 
         private async string seal_async (Gee.List<Account> accounts, string password) throws Error {
-            SourceFunc callback = seal_async.callback;
             string result = "";
             Error? failure = null;
-            new Thread<void> ("auth-seal", () => {
-                try {
-                    result = Transfer.export_aegis_encrypted (accounts, password);
-                } catch (Error e) {
-                    failure = e;
-                }
-                Idle.add ((owned) callback);
-            });
-            yield;
+            try {
+                yield Async.run<bool>((c) => {
+                    try {
+                        result = Transfer.export_aegis_encrypted (accounts, password);
+                    } catch (Error e) {
+                        failure = e;
+                    }
+                    return true;
+                }, Async.Qos.USER);
+            } catch (Error e) {
+                warning("%s", e.message);
+            }
             if (failure != null) throw failure;
             return result;
         }
 
         private async ImportResult open_async (string text, string password) throws Error {
-            SourceFunc callback = open_async.callback;
             ImportResult? result = null;
             Error? failure = null;
-            new Thread<void> ("auth-open", () => {
-                try {
-                    result = Transfer.parse_aegis_encrypted (text, password);
-                } catch (Error e) {
-                    failure = e;
-                }
-                Idle.add ((owned) callback);
-            });
-            yield;
+            try {
+                yield Async.run<bool>((c) => {
+                    try {
+                        result = Transfer.parse_aegis_encrypted (text, password);
+                    } catch (Error e) {
+                        failure = e;
+                    }
+                    return true;
+                }, Async.Qos.USER);
+            } catch (Error e) {
+                warning("%s", e.message);
+            }
             if (failure != null) throw failure;
             return result;
         }
@@ -1479,24 +1483,28 @@ namespace Singularity.Apps.Authenticator {
         }
 
         private async bool verify_async (string attempt, string stored) {
-            SourceFunc callback = verify_async.callback;
             bool ok = false;
-            new Thread<void> ("auth-verify", () => {
-                ok = PasswordHash.verify (attempt, stored);
-                Idle.add ((owned) callback);
-            });
-            yield;
+            try {
+                yield Async.run<bool>((c) => {
+                    ok = PasswordHash.verify (attempt, stored);
+                    return true;
+                }, Async.Qos.USER);
+            } catch (Error e) {
+                warning("%s", e.message);
+            }
             return ok;
         }
 
         private async string hash_async (string password) {
-            SourceFunc callback = hash_async.callback;
             string result = "";
-            new Thread<void> ("auth-hash", () => {
-                result = PasswordHash.create (password);
-                Idle.add ((owned) callback);
-            });
-            yield;
+            try {
+                yield Async.run<bool>((c) => {
+                    result = PasswordHash.create (password);
+                    return true;
+                }, Async.Qos.USER);
+            } catch (Error e) {
+                warning("%s", e.message);
+            }
             return result;
         }
 
