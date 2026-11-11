@@ -60,6 +60,7 @@ sources = core_sources + qr_code_sources + files(
   'src/icons.vala',
   'src/search.vala',
   'src/window.vala',
+  'src/agent_intents.vala',
   'src/app.vala',
 )
 if zbar_dep.found()

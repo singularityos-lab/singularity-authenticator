@@ -24,7 +24,7 @@ namespace Singularity.Apps.Authenticator {
         public Config config;
         public IconCache icons;
         public const int DOCK_FAVORITES = 3;
-        private AuthSearch search;
+        internal AuthSearch search;
         private Singularity.DockMenu? dock_menu;
         private bool add_pending;
 
@@ -57,6 +57,7 @@ namespace Singularity.Apps.Authenticator {
             store = new AccountStore ();
             icons = new IconCache ();
             dock_menu = new CodeDockMenu (this, search);
+            AuthenticatorIntents.install (this);
             store.changed.connect (() => publish_dock ());
             publish_dock ();
             var provider = new CssProvider ();
