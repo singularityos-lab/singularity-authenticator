@@ -6,6 +6,7 @@ Icon=dev.sinty.authenticator
 Terminal=false
 Type=Application
 Categories=Utility;Security;
+X-Sinty-FormFactors=desktop;tablet;phone
 Keywords=2fa;otp;totp;hotp;two-factor;mfa;code;token;steam;authenticator;
 StartupWMClass=dev.sinty.authenticator
 Actions=add-account;
