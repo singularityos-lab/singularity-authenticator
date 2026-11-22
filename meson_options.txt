@@ -1,1 +1,3 @@
 option('qr', type: 'feature', value: 'auto', description: 'Read setup QR codes from images through ZBar')
+option('iride', type: 'feature', value: 'disabled',
+  description: 'Compile the Iride icon next to its SVG')
