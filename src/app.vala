@@ -19,7 +19,7 @@ namespace Singularity.Apps.Authenticator {
         }
     }
 
-    public class AuthenticatorApp : Singularity.Application {
+    public class AuthenticatorApp : Singularity.Application, Singularity.Migration.Migratable {
         public AccountStore store;
         public Config config;
         public IconCache icons;
@@ -172,6 +172,31 @@ namespace Singularity.Apps.Authenticator {
                 if (w is AuthenticatorWindow) return (AuthenticatorWindow) w;
             }
             return new AuthenticatorWindow (this);
+        }
+
+        public Variant save_model () {
+            return new VariantDict ().end ();
+        }
+
+        public async void restore_model (Variant model) throws Error {
+        }
+
+        public string window_kind (Gtk.Window w) {
+            return (w is AuthenticatorWindow) ? "accounts" : "";
+        }
+
+        public Variant save_window (Gtk.Window w) {
+            return ((AuthenticatorWindow) w).save_migration ();
+        }
+
+        public async Gtk.Window? rebuild_window (string kind, Variant data) throws Error {
+            if (kind != "accounts") return null;
+            foreach (var old in get_windows ().copy ()) {
+                if (old is AuthenticatorWindow) old.destroy ();
+            }
+            var w = new AuthenticatorWindow (this);
+            w.restore_migration (data);
+            return w;
         }
 
         public bool window_unlocked () {

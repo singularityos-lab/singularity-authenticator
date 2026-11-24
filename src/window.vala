@@ -740,6 +740,19 @@ namespace Singularity.Apps.Authenticator {
             }
         }
 
+        public Variant save_migration () {
+            var d = new VariantDict ();
+            d.insert_value ("tag", new Variant.string (tag_filter ?? ""));
+            return d.end ();
+        }
+
+        public void restore_migration (Variant data) {
+            var d = new VariantDict (data);
+            string tag = (d.lookup_value ("tag", VariantType.STRING) ?? new Variant.string ("")).get_string ();
+            tag_filter = tag != "" ? tag : null;
+            if (loaded) rebuild_tags ();
+        }
+
         private void toggle_favorite (Account a) {
             if (!a.favorite) {
                 int count = 0;
