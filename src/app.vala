@@ -19,7 +19,7 @@ namespace Singularity.Apps.Authenticator {
         }
     }
 
-    public class AuthenticatorApp : Singularity.Application, Singularity.Migration.Migratable {
+    public class AuthenticatorApp : Singularity.Application, Singularity.Migration.Migratable, Singularity.Startup.Bootable {
         public AccountStore store;
         public Config config;
         public IconCache icons;
@@ -136,18 +136,52 @@ namespace Singularity.Apps.Authenticator {
             set_accels_for_action ("app.settings", { "<Control>comma" });
         }
 
-        public override void activate () {
+        public Singularity.Startup.Plan build_plan (Singularity.Startup.Request request) {
+            var plan = new Singularity.Startup.Plan ();
+            plan.version = "authenticator-1";
+            if (request.kind == Singularity.Startup.RequestKind.SERVICE) {
+                plan.main ("ready", Singularity.Startup.Category.PREPARE, (c) => {})
+                    .reaches (Singularity.Startup.Milestone.SHELL_READY)
+                    .reaches (Singularity.Startup.Milestone.CONTENT_READY)
+                    .reaches (Singularity.Startup.Milestone.INTERACTIVE);
+                return plan;
+            }
+            var shell = plan.main ("window", Singularity.Startup.Category.SHELL, (c) => {
+                c.window = request.kind == Singularity.Startup.RequestKind.OPEN ? present_window () : show_window ();
+            }).reaches (Singularity.Startup.Milestone.SHELL_READY);
+            if (request.kind == Singularity.Startup.RequestKind.OPEN) {
+                var files = request.files ();
+                plan.main ("open-file", Singularity.Startup.Category.CONTENT, (c) => open_files ((AuthenticatorWindow) c.window, files))
+                    .depends_on ("window")
+                    .reaches (Singularity.Startup.Milestone.CONTENT_READY)
+                    .reaches (Singularity.Startup.Milestone.INTERACTIVE);
+            } else {
+                shell.reaches (Singularity.Startup.Milestone.CONTENT_READY).reaches (Singularity.Startup.Milestone.INTERACTIVE);
+            }
+            return plan;
+        }
+
+        public void handle_request (Singularity.Startup.Request request) {
+            if (request.kind == Singularity.Startup.RequestKind.OPEN) open_files (present_window (), request.files ());
+            else show_window ();
+        }
+
+        private AuthenticatorWindow present_window () {
             var w = main_window ();
             w.present ();
+            return w;
+        }
+
+        private AuthenticatorWindow show_window () {
+            var w = present_window ();
             if (add_pending) {
                 add_pending = false;
                 w.add_when_ready ();
             }
+            return w;
         }
 
-        public override void open (File[] files, string hint) {
-            var w = main_window ();
-            w.present ();
+        private void open_files (AuthenticatorWindow w, File[] files) {
             foreach (var file in files) {
                 string uri = file.get_uri ();
                 if (!uri.has_prefix ("otpauth://")) continue;
